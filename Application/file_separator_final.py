@@ -1,4 +1,3 @@
-from re import T
 import tkinter as tk
 from tkinter import RAISED, Button, Canvas, Image, Label, PhotoImage, Tk, Toplevel, YView, ttk
 from tkinter import font,colorchooser,filedialog,messagebox
