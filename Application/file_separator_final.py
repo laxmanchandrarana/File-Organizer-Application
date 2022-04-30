@@ -102,71 +102,88 @@ def browse_func():
                     )
                 if mbox is True:
                     move_file_to(folder_path)
-                    # for items in file_finder(feedback,extension_tuple):
-                    #     item_path=os.path.join(feedback,items)
-                    #     item_new_path=os.path.join(folder_path,items)
-                    #     shutil.move(item_path,item_new_path)
+                # elif mbox is False:
+                else:
+                    # mbox2=messagebox.askyesno(
+                    # 'ASKING',
+                    # 'Do you Want to Create a New Folder?'
+                    # )
+                    # # flag=True
+                    # # while flag:
+                    # if mbox2 is True:
+                        # flag2=True
+                        # while flag2:
+                    # for i in range(len(dict_extension)
+                    pop=Toplevel(main_application)
+                    pop.geometry("800x250")
+                    pop.configure(background="#73568f")
+
+                    f_var=tk.StringVar()
+                    f_entry=tk.Entry(
+                        pop,
+                        width=25,
+                        background='#000000',
+                        foreground="#9e4ca6",
+                        font='Arial 15 bold',
+                        textvariable=f_var)
+                    f_entry.pack()
+                    f_entry.focus()
+
+                    def submit_action():
+                        given_f=f_var.get()
+                        new_p=os.path.join(folder_path,given_f)
+                        if os.path.exists(new_p):
+                            top=Toplevel(main_application)
+                            top.geometry("200x200")
+                            top_label=tk.Label(top,text=f'{given_f} folder also already exists!')
+                            top_label.pack()
+                            top.after(2000,top.destroy)
+                        else:
+                            os.makedirs(new_p, exist_ok=True)
+                            print(new_p)
+                            Label(
+                                pop,
+                                text=f"{given_f} folder created succesfully!",
+                                font='Arial 10 bold',
+                                background='#2a62bd',
+                                fg="White"
+                                ).pack()
+                            move_file_to(new_p)
+                            pop.after(1500,pop.destroy)
+                            return 
+
+                    def close_action():
+                        pop.destroy()
+
+                    submit_button=tk.Button(
+                        pop,
+                        text=f'Create a folder in {folder_name} folder',
+                        command=submit_action
+                        )
+                    def s_enter(e):
+                        submit_button['background'] = '#6fcfd6'
+                    def s_leave(e):
+                        submit_button['background'] = '#77a9bf'
                     
-                elif mbox is False:
-                    mbox2=messagebox.askyesno(
-                    'ASKING',
-                    'Do you Want to Create a New Folder?'
+                    submit_button.bind("<Enter>", s_enter)
+                    submit_button.bind("<Leave>", s_leave)
+                    submit_button.configure(bg='#298dd9',font=('Calibri 15 bold underline'))
+                    submit_button.pack(pady= 20)
+
+                    Label(
+                        pop,
+                        text="Don't want to create a folder",
+                        font='Arial 10 bold'
+                    ).pack(pady=23)
+
+                    close_button=tk.Button(
+                        pop,
+                        text='Close',
+                        command=close_action
                     )
-                    flag=True
-                    while flag:
-                        if mbox2 is True:
-                            flag2=True
-                            while flag2:
-                                pop=Toplevel(main_application)
-                                pop.geometry("400x250")
-                                pop.configure(background="#73568f")
-
-                                f_var=tk.StringVar()
-                                f_entry=tk.Entry(
-                                    pop,
-                                    width=25,
-                                    foreground="#9e4ca6",
-                                    font='Arial 15 bold',
-                                    textvariable=f_var)
-                                f_entry.pack()
-                                f_entry.focus()
-
-                                def action():
-                                    given_f=f_var.get()
-                                    new_p=os.path.join(folder_path,given_f)
-                                    if os.path.exists(new_p):
-                                        top=Toplevel(main_application)
-                                        top.geometry("200x200")
-                                        top_label=tk.Label(top,text=f'{given_f} folder also already exists!')
-                                        top_label.pack()
-                                        top.after(2000,top.destroy)
-                                    else:
-                                        os.makedirs(new_p, exist_ok=True)
-                                        tk.Label(
-                                            pop,
-                                            text=f"{new_p} folder created succesfully!",
-                                            font='Arial 10 bold',
-                                            background='#2a62bd',
-                                            fg="White"
-                                            )
-                                        move_file_to(new_p)
-                                        # for items in file_finder(feedback,extension_tuple):
-                                        #     item_path2=os.path.join(feedback,items)
-                                        #     item_new_path2=os.path.join(new_p,items)
-                                        #     shutil.move(item_path2,item_new_path2)
-                                        
-                                        pop.after(1500,pop.destroy)
-                                submit_button=ttk.Button(
-                                    pop,
-                                    text='Submit',
-                                    command=action
-                                    )
-                                submit_button.pack()
-                                
-                                return False
-                        elif mbox2 is False:
-                            return False
-                        return False
+                    close_button.configure(bg='#298dd9',font=('Calibri 15 bold underline'))
+                    close_button.pack(pady= 25)
+                    
             else:
                 os.makedirs(folder_path)
                 # created=Toplevel(main_application)
@@ -175,11 +192,6 @@ def browse_func():
                 # main_application.wm_attributes(("-transparentcolor", 'grey'))
                 print(f"{folder_name} Folder created successfully!")
             move_file_to(folder_path)
-            # for items in file_finder(feedback,extension_tuple):
-            #     item_path=os.path.join(feedback,items)
-            #     item_new_path=os.path.join(folder_path,items)
-            #     shutil.move(item_path,item_new_path)
-            #     print(item_new_path)
     else:
         return
 
