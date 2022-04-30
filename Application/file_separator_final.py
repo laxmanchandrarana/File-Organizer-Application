@@ -84,6 +84,13 @@ def browse_func():
                     files.append(file)
         return files
 
+    def move_file_to(f):
+        for items in file_finder(feedback,extension_tuple):
+            item_path=os.path.join(feedback,items)
+            item_new_path=os.path.join(f,items)
+            shutil.move(item_path,item_new_path)
+            print(item_new_path)
+
     if feedback:
         for extension_type,extension_tuple in dict_extension.items():
             folder_name=extension_type.split('_')[0]+'Files'
@@ -94,10 +101,11 @@ def browse_func():
                     f'{folder_name} Folder already exists!\nDo you want to move the file to \nexisting {folder_name} folder?'
                     )
                 if mbox is True:
-                    for items in file_finder(feedback,extension_tuple):
-                        item_path=os.path.join(feedback,items)
-                        item_new_path=os.path.join(folder_path,items)
-                        shutil.move(item_path,item_new_path)
+                    move_file_to(folder_path)
+                    # for items in file_finder(feedback,extension_tuple):
+                    #     item_path=os.path.join(feedback,items)
+                    #     item_new_path=os.path.join(folder_path,items)
+                    #     shutil.move(item_path,item_new_path)
                     
                 elif mbox is False:
                     mbox2=messagebox.askyesno(
@@ -107,8 +115,8 @@ def browse_func():
                     flag=True
                     while flag:
                         if mbox2 is True:
-                            flag=True
-                            while flag:
+                            flag2=True
+                            while flag2:
                                 pop=Toplevel(main_application)
                                 pop.geometry("400x250")
                                 pop.configure(background="#73568f")
@@ -141,11 +149,12 @@ def browse_func():
                                             background='#2a62bd',
                                             fg="White"
                                             )
-                                        for items in file_finder(feedback,extension_tuple):
-                                            item_path2=os.path.join(feedback,items)
-                                            item_new_path2=os.path.join(new_p,items)
-                                            shutil.move(item_path2,item_new_path2)
-                                        print(new_p)
+                                        move_file_to(new_p)
+                                        # for items in file_finder(feedback,extension_tuple):
+                                        #     item_path2=os.path.join(feedback,items)
+                                        #     item_new_path2=os.path.join(new_p,items)
+                                        #     shutil.move(item_path2,item_new_path2)
+                                        
                                         pop.after(1500,pop.destroy)
                                 submit_button=ttk.Button(
                                     pop,
@@ -165,11 +174,12 @@ def browse_func():
                 Label(main_application,text=f"{folder_name} Folder created successfully!",pady=10,font='Arial 7 bold',bg="red").pack()
                 # main_application.wm_attributes(("-transparentcolor", 'grey'))
                 print(f"{folder_name} Folder created successfully!")
-            for items in file_finder(feedback,extension_tuple):
-                item_path=os.path.join(feedback,items)
-                item_new_path=os.path.join(folder_path,items)
-                shutil.move(item_path,item_new_path)
-                print(item_new_path)
+            move_file_to(folder_path)
+            # for items in file_finder(feedback,extension_tuple):
+            #     item_path=os.path.join(feedback,items)
+            #     item_new_path=os.path.join(folder_path,items)
+            #     shutil.move(item_path,item_new_path)
+            #     print(item_new_path)
     else:
         return
 
