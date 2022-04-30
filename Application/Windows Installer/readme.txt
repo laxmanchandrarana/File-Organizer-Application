@@ -1,0 +1,1 @@
+After installing on your system, if the application showing some error then move the "bg.jpg" file to the folder where you installed the application.
